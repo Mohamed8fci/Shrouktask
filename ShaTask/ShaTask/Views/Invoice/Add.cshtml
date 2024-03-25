@@ -1,0 +1,43 @@
+﻿@model ShaTask.ViewModels.InvoiceDto
+
+<h2>Add Invoice</h2>
+
+<form asp-action="Add">
+    <div class="form-group">
+        <label asp-for="CustomerName"></label>
+        <input asp-for="CustomerName" class="form-control" />
+        <span asp-validation-for="CustomerName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Invoicedate"></label>
+        <input asp-for="Invoicedate" class="form-control" />
+        <span asp-validation-for="Invoicedate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CashierId"></label>
+        <select asp-for="CashierId" asp-items="@ViewBag.Cashiers" class="form-control"></select>
+        <span asp-validation-for="CashierId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BranchId"></label>
+        <select asp-for="BranchId" asp-items="@ViewBag.Branches" class="form-control"></select>
+        <span asp-validation-for="BranchId" class="text-danger"></span>
+    </div>
+    <h3>Items</h3>
+    <div id="invoiceDetails">
+        <div class="form-group">
+            <label>Item Name</label>
+            <input name="InvoiceDetails[0].ItemName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Item Count</label>
+            <input name="InvoiceDetails[0].ItemCount" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Item Price</label>
+            <input name="InvoiceDetails[0].ItemPrice" class="form-control" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+<a href="@Url.Action("Index", "Invoice")" class="btn btn-primary">Back to List</a>

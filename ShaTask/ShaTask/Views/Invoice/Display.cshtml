@@ -1,0 +1,41 @@
+﻿@model InvoiceHeader
+
+<h2>Display Invoice</h2>
+
+<table class="table">
+    <tr>
+        <th>Invoice ID</th>
+        <td>@Model.Id</td>
+    </tr>
+    <tr>
+        <th>Customer Name</th>
+        <td>@Model.CustomerName</td>
+    </tr>
+    <tr>
+        <th>Invoice Date</th>
+        <td>@Model.Invoicedate.ToString("d")</td>
+    </tr>
+    <tr>
+        <th>Cashier</th>
+        <td>@(Model.Cashier != null ? Model.Cashier.CashierName : "N/A")</td>
+    </tr>
+    <tr>
+        <th>Branch</th>
+        <td>@Model.Branch.BranchName</td>
+    </tr>
+    <tr>
+        <th>Items</th>
+        <td>
+            @foreach (var detail in Model.InvoiceDetails)
+            {
+                <div>@detail.ItemCount @detail.ItemName for @detail.ItemPrice pounds</div>
+            }
+        </td>
+    </tr>
+    <tr>
+        <th>Total Price</th>
+        <td>@Model.InvoiceDetails.Sum(detail => detail.ItemCount * detail.ItemPrice)</td>
+    </tr>
+</table>
+
+<a href="@Url.Action("Index", "Invoice")" class="btn btn-primary">Back to List</a>

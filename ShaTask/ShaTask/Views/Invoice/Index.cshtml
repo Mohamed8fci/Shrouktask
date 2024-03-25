@@ -1,0 +1,46 @@
+﻿@model IEnumerable<InvoiceHeader>
+
+<h2>Invoice Data</h2>
+
+<div class="mb-3">
+    <a href="@Url.Action("Add", "Invoice")" class="btn btn-success">Add New Invoice</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Invoice ID</th>
+            <th>Customer Name</th>
+            <th>Invoice Date</th>
+            <th>Cashier</th>
+            <th>Branch</th>
+            <th>Items</th>
+            <th>Total Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var invoice in Model)
+        {
+            <tr>
+                <td>@invoice.Id</td>
+                <td>@invoice.CustomerName</td>
+                <td>@invoice.Invoicedate.ToString("d")</td>
+                <td>@(invoice.Cashier != null ? invoice.Cashier.CashierName : "N/A")</td>
+                <td>@invoice.Branch.BranchName</td>
+                <td>
+                    @foreach (var detail in invoice.InvoiceDetails)
+                    {
+                        <div>@detail.ItemCount @detail.ItemName for @detail.ItemPrice pounds</div>
+                    }
+                </td>
+                <td>@invoice.InvoiceDetails.Sum(detail => detail.ItemCount * detail.ItemPrice)</td>
+                <td>
+                    <a href="@Url.Action("Display", "Invoice", new { id = invoice.Id })" class="btn btn-primary">Display</a>
+                    <a href="@Url.Action("Edit", "Invoice", new { id = invoice.Id })" class="btn btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", "Invoice", new { id = invoice.Id })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
